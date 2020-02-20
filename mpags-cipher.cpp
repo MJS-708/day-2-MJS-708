@@ -24,7 +24,10 @@ bool processCommandLine(
   bool& helpRequested,
   bool& versionRequested,
   std::string& inputFileName,
-  std::string& outputFileName );
+  std::string& outputFileName,
+  bool& encrypt,
+  int& key,
+  bool& closeProgram );
 
 //function
 std::string runCaesarCipher( const std::string& inputText,
@@ -41,33 +44,36 @@ int main(int argc, char* argv[])
   bool versionRequested {false};
   std::string inputFileName {""}; //set names before function so changed out of scope
   std::string outputFileName {""};
+  bool encrypt {false};
+  int key {};
+  bool closeProgram {false};
 
-  std::string output_text {""}; // allocate memory for string output
-  char in_char{'x'}; // allocated memory for each character in input file
+  std::string transformed_text {""}; // allocate memory for string output
+  char in_char{'x'}; // allocated memory address for each character in input file
 
-  processCommandLine(cmdLineArgs, helpRequested, versionRequested, inputFileName, outputFileName);
+  processCommandLine(cmdLineArgs, helpRequested, versionRequested, inputFileName, outputFileName, encrypt, key, closeProgram);
 
-  // Loop over each character from user input
-  // (until Return then CTRL-D (EOF) pressed)
+  if (closeProgram){
+    std::cout << "Program is ending\n" << "Check provided key and/or argument to indicate encrpytion/decrpytion" << std::endl;
+    return 0;
+  }
+
+//INPUTTING CIPHER
   if(inputFileName.empty()){
     std::cout << "Give text argument to encrypt/decrypt" << std::endl;
-    while(std::cin >> in_char) //GO OVER
+    while(std::cin >> in_char) //iterate over each character in command line input
     {
-      std::string transformed_char{transformChar(in_char)};
-      output_text.append(transformed_char);
-      //std::cout << output_text << std::endl;
+      transformed_text = transformed_text.append(transformChar(in_char)); //Appends transformed character to output text
     }
-    std::cout << output_text << std::endl;
   }
   else{
     std::ifstream in_file {inputFileName}; //Load file
     bool ok_to_read = in_file.good(); //Check that file is readable
 
     if (ok_to_read){ //if file is readable...
-      while(in_file >> in_char) //GO OVER
+      while(in_file >> in_char) //iterate over each character in file input
       {
-        std::string transformed_char{transformChar(in_char)};
-        output_text.append(transformed_char);
+        transformed_text = transformed_text.append(transformChar(in_char)); //Appends transformed character to output text
       }
     }
     else{
@@ -75,8 +81,14 @@ int main(int argc, char* argv[])
     }
   }
 
+
+  transformed_text = runCaesarCipher(transformed_text, key, encrypt); //transformed text is now the deciphered text returned by the caesar cipher
+
+  //std::cout << transformed_text << std::endl;
+
+//OUTPUTTING CIPHER
   if(outputFileName.empty()){
-      std::cout << output_text << std::endl;
+      std::cout << transformed_text << std::endl;
     }
     else{
     std::string name {outputFileName}; // name of out file
@@ -85,7 +97,7 @@ int main(int argc, char* argv[])
     bool ok_to_write = out_file.good(); //can we write to file (write permissions, it exists etc)... returns true if can write
 
     if (ok_to_write){
-      out_file << output_text << std::endl; // outputs text into the file
+      out_file << transformed_text << std::endl; // outputs text into the file
 
       out_file.close();
     }

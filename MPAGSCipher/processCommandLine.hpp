@@ -11,6 +11,9 @@ bool processCommandLine(
   bool& helpRequested,
   bool& versionRequested,
   std::string& inputFileName,
-  std::string& outputFileName );
+  std::string& outputFileName,
+  bool& encrypt,
+  int& key,
+  bool& closeProgram );
 
 #endif //MPAGSCIPHER_TRANSFORMCHAR_HPP is now defined

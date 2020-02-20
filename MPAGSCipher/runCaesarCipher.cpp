@@ -1,26 +1,51 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <typeinfo>
 
 
 std::string runCaesarCipher( const std::string& inputText,
-const size_t key, const bool encrypt )
+int key, const bool encrypt )
 {
-  std::string alphabet {"ABCDEFGHIJKLMNOPQRSTUVWXZ"}; // Create the alphabet container and output string
+
+  if (encrypt){
+    std::cout << "Encrypting text" << std::endl;
+  }
+  else if (!encrypt){
+    std::cout << "Decrypting text" << std::endl;
+    key = -key;
+  }
+
+
+  std::string alphabet {"ABCDEFGHIJKLMNOPQRSTUVWXYZ"}; // Create the alphabet container and output string
   std::cout << "key is " << key << std::endl;
-  std::cout << encrypt << std::endl;
+
+  std::string outputText {""};
+
 
   for (unsigned int i{0}; i < inputText.size(); i++){ // Loop over the input text
 
-    std::cout << inputText.at(i) << std::endl;
-
     // For each character find the corresponding position in the alphabet
-    // Apply the shift (+ve or –ve depending on encrypt/decrypt)
-    // to the position, handling correctly potential wrap-around
-    // Determine the new character and add it to the output string
+    size_t found {alphabet.find(inputText.at(i))};
+    if (found != std::string::npos){    // For each character find the corresponding position in the alphabet
+
+        int newIndex {int(found) + key};   // Apply the shift (+ve or –ve depending on encrypt/decrypt)
+
+        if(newIndex < 0){   // Wraps from A to Z for decrypting
+          newIndex = 26 + newIndex;
+        }
+        else if (newIndex > 25){    // Wraps from Z to A for encrypting
+          newIndex = newIndex % 26;
+        }
+        //std::cout << inputText.at(i) << " to " << alphabet.at(newIndex) << std::endl;
+        outputText = outputText.append(std::string{alphabet.at(newIndex)});
+      }
+    else{
+      std::cout << "Error: character not recognised" << std::endl;
+      return "FAIL!";
+    }
 
   }
 
-      // Finally (after the loop), return the output string
-      return alphabet;
+  return outputText; // Finally (after the loop), return the output string
 }

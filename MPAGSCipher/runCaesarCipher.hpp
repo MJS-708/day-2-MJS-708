@@ -7,6 +7,6 @@
 
 //function to parse command line arguments
 std::string runCaesarCipher( const std::string& inputText,
-  const size_t key, const bool encrypt );
+  int key, const bool encrypt );
 
 #endif //MPAGSCIPHER_TRANSFORMCHAR_HPP is now defined
