@@ -20,7 +20,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wfatal-errors -Wshadow -pedantic")
 
 # - Declare build of mpags-cipher main program and any files needed with functions
-add_executable(mpags-cipher mpags-cipher.cpp MPAGSCipher/TransformChar.cpp MPAGSCipher/processCommandLine.cpp MPAGSCipher/runCaesarCipher.cpp)
+add_executable(mpags-cipher mpags-cipher.cpp MPAGSCipher/TransformChar.cpp MPAGSCipher/processCommandLine.cpp MPAGSCipher/CaesarCipher.cpp)
 
 # - Tell compiler where to look for headers/include files within MPAGSCipher directory (where TransformChar.cpp is)
 target_include_directories(mpags-cipher PRIVATE MPAGSCipher)
