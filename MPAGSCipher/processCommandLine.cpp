@@ -5,16 +5,14 @@
 #include <locale>
 #include <cctype>
 
+// Headers file
+#include "processCommandLine.hpp"
+#include "CipherMode.hpp"
 
 bool processCommandLine( //function to parse command line arguments
   const std::vector<std::string>& args,
-  bool& helpRequested,
-  bool& versionRequested,
-  std::string& inputFileName,
-  std::string& outputFileName,
-  bool& encrypt,
-  int& key,
-  bool& closeProgram )//
+  ProgramSettings& arguments //type is the struct type created, passed as reference
+ )//
   {
 
     int checkCipherArg {0};
@@ -24,12 +22,12 @@ bool processCommandLine( //function to parse command line arguments
       //printf("Argument %i, is %s \n", i, args.at(i)); // using prints?
 
       if(args.at(i) == "--help" || args.at(i) == "-h"){ //Print help
-        helpRequested = true;
+        arguments.helpRequested = true;
         break; //if want help don't do anything else
       }
 
       else if(args.at(i) == "--version"){ //print version number
-        versionRequested = true;
+        arguments.versionRequested = true;
         break; //if want version don't do anything else
       }
 
@@ -39,7 +37,7 @@ bool processCommandLine( //function to parse command line arguments
           std::cout << "[error] -i requires a filename argument" << std::endl;
           }
         else{
-          inputFileName = args.at(i+1); // sets input file name to value after -if (/* condition */) {
+          arguments.inputFileName = args.at(i+1); // sets input file name to value after -if (/* condition */) {
           //++i;
         }
       }
@@ -50,19 +48,19 @@ bool processCommandLine( //function to parse command line arguments
           std::cout << "[error] -o requires a filename argument" << std::endl;
           }
         else{
-          outputFileName = args.at(i+1); // sets input file name to value after -if (/* condition */) {
+          arguments.outputFileName = args.at(i+1); // sets input file name to value after -if (/* condition */) {
         }
       }
 
       else if(args.at(i) == "--encrypt" || args.at(i) == "-e"){
-        encrypt = true;
+        arguments.mode = Cipher::encrypt;
         //std::cout << "Encrypting text" << std::endl;
         ++checkCipherArg; //makes variable non zero so know have a encrypt/decrypt arg
         //std::cout << "Encrypting text" << std::endl;
       }
 
       else if(args.at(i) == "--decrypt" || args.at(i) == "-d"){
-        encrypt = false;
+        arguments.mode = Cipher::decrypt;
         //std::cout << "Decrypting text" << std::endl;
         ++checkCipherArg; //makes variable non zero so know have a encrypt/decrypt arg
         //std::cout << "Decrypting text" << std::endl;
@@ -73,19 +71,18 @@ bool processCommandLine( //function to parse command line arguments
           std::cout << "[error] -k}--key requires an integer argument" << std::endl;
           }
         else{
-          key = std::stoull(args.at(i+1));
-          //std::cout << "Key is " << key << std::endl;
+          arguments.key = args.at(i+1);
         }
       }
 
     }
 
-    if (key == 0 || checkCipherArg == 0){
-      closeProgram = true;
+    if (arguments.key.size() == 0 || checkCipherArg == 0){ //If size of string after -k is 0 (no key) or cipherArgs closes program
+      arguments.closeProgram = true;
     }
 
     // Handle help, if requested
-    if (helpRequested) { // equivalent to helpRequested == true
+    if (arguments.helpRequested) { // equivalent to helpRequested == true
       // Line splitting for readability
       std::cout
         << "Usage: mpags-cipher [-i <file>] [-o <file>]\n\n"
@@ -111,7 +108,7 @@ bool processCommandLine( //function to parse command line arguments
     // Handle version, if requested
     // Like help, requires no further action,
     // so return from main with zero to indicate success
-    if (versionRequested) {
+    if (arguments.versionRequested) {
       std::cout << "0.1.0" << std::endl;
       return 0;
     }
