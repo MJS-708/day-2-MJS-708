@@ -6,7 +6,7 @@
 #include <cctype>
 
 // Headers file
-#include "processCommandLine.hpp"
+#include "ProcessCommandLine.hpp"
 #include "CipherMode.hpp"
 
 bool processCommandLine( //function to parse command line arguments
@@ -34,6 +34,7 @@ bool processCommandLine( //function to parse command line arguments
       else if(args.at(i) == "-i"){
         //bool test{std::isalpha(test_char)};
         if(i+1 > args.size()-1 || args.at(i+1)[0] == '-'){ //Checks that there is an argument after -i that isn't another argument ('-')
+          arguments.inputFileName = "";
           std::cout << "[error] -i requires a filename argument" << std::endl;
           }
         else{
@@ -45,6 +46,7 @@ bool processCommandLine( //function to parse command line arguments
       else if(args.at(i) == "-o"){
         //bool test{std::isalpha(test_char)};
         if(i+1 > args.size()-1 || args.at(i+1)[0] == '-'){ //Checks that there is an argument after -i.... need [0] to change to character from string
+          arguments.outputFileName = "";
           std::cout << "[error] -o requires a filename argument" << std::endl;
           }
         else{
@@ -66,9 +68,9 @@ bool processCommandLine( //function to parse command line arguments
         //std::cout << "Decrypting text" << std::endl;
       }
 
-      else if(args.at(i) == "--key" || args.at(i) == "-k"){
+      else if(args.at(i) == "-k"){
         if(i+1 > args.size()-1 || args.at(i+1)[0] == '-'){ //Checks that there is an argument after -i.... need [0] to change to character from string
-          std::cout << "[error] -k}--key requires an integer argument" << std::endl;
+          std::cout << "[error] -k requires an integer argument" << std::endl;
           }
         else{
           arguments.key = args.at(i+1);
@@ -95,7 +97,7 @@ bool processCommandLine( //function to parse command line arguments
         << "  -o FILE          Write processed text to FILE\n"
         << "                   Stdout will be used if not supplied\n\n"
         << "                   Stdout will be used if not supplied\n\n"
-        << "  -k|--key         Integer [0,25] to us as the Key for the cipher\n\n"
+        << "  -k               Integer [0,25] to us as the Key for the cipher\n\n"
         << "  -e|--encrypt     Encrypts the input text\n\n"
         << "  -d|--decrypt     Decrypts the input text\n\n";
 

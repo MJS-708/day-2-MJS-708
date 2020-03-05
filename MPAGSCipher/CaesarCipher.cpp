@@ -7,12 +7,12 @@
 #include "CaesarCipher.hpp"
 #include "CipherMode.hpp"
 
-CaesarCipher::CaesarCipher(const int inputKey)
-  : key_{inputKey}{ // takes input value and multiplies by 2
+CaesarCipher::CaesarCipher(const int inputKey) // Takes key in integer form
+  : key_{inputKey}{ // Can do something to input key here...
   }
-CaesarCipher::CaesarCipher(const std::string inputKey)
-  : key_{std::stoi(inputKey)}{
-  } // takes input value and multiplies by 2
+CaesarCipher::CaesarCipher(const std::string inputKey) //Takes key as string
+  : key_{std::stoi(inputKey)}{ // converts input key to integer from string (stoi)
+  }
 
 
 std::string CaesarCipher::applyCaesarCipher (const std::string& inputText, const Cipher mode ) const

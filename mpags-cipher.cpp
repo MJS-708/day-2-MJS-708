@@ -11,7 +11,7 @@
 
 // Our project headers
 #include "TransformChar.hpp"
-#include "processCommandLine.hpp"
+#include "ProcessCommandLine.hpp"
 //#include "runCaesarCipher.hpp"
 #include "CaesarCipher.hpp"
 #include "CipherMode.hpp"
