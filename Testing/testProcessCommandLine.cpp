@@ -15,7 +15,7 @@
 #include "CipherMode.hpp"
 
 
-ProgramSettings arguments {false, false, "", "", Cipher::encrypt, "", false}; // which keep changing and being changed back during code
+ProgramSettings arguments {false, false, "", "", Cipher::encrypt, "", false, CipherType:: Caesar}; // which keep changing and being changed back during code
 
 std::string testFileName {"Test.txt"};
 

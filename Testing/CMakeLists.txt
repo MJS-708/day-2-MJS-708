@@ -41,3 +41,10 @@ add_test(NAME test-ProcessCommandLine COMMAND testProcessCommandLine)
 add_executable(testCaesarCipher testCaesarCipher.cpp)
 target_link_libraries(testCaesarCipher MPAGSCipher Catch)
 add_test(NAME test-CaesarCipher COMMAND testCaesarCipher)
+
+
+# - testCiphers unit test
+
+add_executable(testCiphers testCiphers.cpp)
+target_link_libraries(testCiphers MPAGSCipher Catch)
+add_test(NAME test-Ciphers COMMAND testCiphers)

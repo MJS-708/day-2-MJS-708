@@ -22,11 +22,11 @@ std::string transformed_text {""}; //Initialise string in memory for ciphered te
 TEST_CASE("If key is in string form it tranforms text correctly", "[alphanum]"){
   CaesarCipher cipherObject {"5"}; //initialising class with key of 5
 
-  transformed_text = cipherObject.applyCaesarCipher(text, Cipher::encrypt); //Alters transformed text according to cipher
+  transformed_text = cipherObject.applyCipher(text, Cipher::encrypt); //Alters transformed text according to cipher
 
   REQUIRE(transformed_text == "GTD"); // BOY + 5 letters for each character
 
-  transformed_text = cipherObject.applyCaesarCipher(text, Cipher::decrypt); //Alters transformed text according to cipher
+  transformed_text = cipherObject.applyCipher(text, Cipher::decrypt); //Alters transformed text according to cipher
 
   REQUIRE(transformed_text == "WJT"); // BOY - 5 letters for each character
 
