@@ -23,23 +23,16 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wfatal-errors -Wshadow -pedantic")
 # - Add MPAGSCipher subdirectory to the build
 add_subdirectory(MPAGSCipher)
 
+# - Add the Documentation subdirectory to the build
+add_subdirectory(Documentation)
+
 # - Enablettesting and add the testing subdirectory to the Build
 enable_testing()
 add_subdirectory(Testing)
 
 
 # - Declare build of mpags-cipher main program and any files needed with functions
-add_executable(mpags-cipher
-       mpags-cipher.cpp
-  #      MPAGSCipher/TransformChar.cpp   # included in library
-#      MPAGSCipher/ProcessCommandLine.cpp  # included in library
-#      MPAGSCipher/CaesarCipher.cpp   # included in library
-)
+add_executable(mpags-cipher mpags-cipher.cpp)
 
 target_link_libraries(mpags-cipher PRIVATE MPAGSCipher)
 
-
-
-#### REPLACED ###
-# - Tell compiler where to look for headers/include files within MPAGSCipher directory (where TransformChar.cpp is)
-# target_include_directories(mpags-cipher PRIVATE MPAGSCipher)

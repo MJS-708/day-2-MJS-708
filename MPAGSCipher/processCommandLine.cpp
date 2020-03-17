@@ -7,7 +7,6 @@
 
 // Headers file
 #include "ProcessCommandLine.hpp"
-#include "CipherMode.hpp"
 
 bool processCommandLine( //function to parse command line arguments
   const std::vector<std::string>& args,
@@ -77,6 +76,43 @@ bool processCommandLine( //function to parse command line arguments
         }
       }
 
+      else if(args.at(i) == "-o"){
+        //bool test{std::isalpha(test_char)};
+        if(i+1 > args.size()-1 || args.at(i+1)[0] == '-'){ //Checks that there is an argument after -i.... need [0] to change to character from string
+          arguments.outputFileName = "";
+          std::cout << "[error] -o requires a filename argument" << std::endl;
+          }
+        else{
+          arguments.outputFileName = args.at(i+1); // sets input file name to value after -if (/* condition */) {
+        }
+      }
+
+      else if ( args[i] == "-c" || args[i] == "--cipher" ) {
+        // Handle cipher type option
+        // Next element is the name of the cipher, unless -c is the last argument
+        if(i+1 > args.size()-1 || args.at(i+1)[0] == '-'){ //Checks that there is an argument after -i.... need [0] to change to character from string
+          std::cerr << "[error] -c requires a string argument" << std::endl;
+          // Set the flag to indicate the error and terminate the loop
+          arguments.closeProgram = true;
+          //break;
+        }
+        else {
+          // Got the key, so assign the value and advance past it
+          if ( args[i+1] == "caesar" ) {
+            arguments.cipherType = CipherType::Caesar;
+          }
+          else if ( args[i+1] == "playfair" ) {
+            arguments.cipherType = CipherType::Playfair;
+          }
+          else if ( args[i+1] == "vignere" ) {
+            arguments.cipherType = CipherType::Vignere;
+          }
+          else {
+            std::cerr << "[error] unknown cipher '" << args[i+1] << "'\n";
+            arguments.closeProgram = true;
+          }
+        }
+      }
     }
 
     if (arguments.key.size() == 0 || checkCipherArg == 0){ //If size of string after -k is 0 (no key) or cipherArgs closes program
@@ -97,6 +133,8 @@ bool processCommandLine( //function to parse command line arguments
         << "  -o FILE          Write processed text to FILE\n"
         << "                   Stdout will be used if not supplied\n\n"
         << "                   Stdout will be used if not supplied\n\n"
+        << "  -c CIPHER        Specify the cipher to be used to perform the encryption/decryption\n"
+        << "                   CIPHER can either be caesar or playfair - caesar is the default\n\n"
         << "  -k               Integer [0,25] to us as the Key for the cipher\n\n"
         << "  -e|--encrypt     Encrypts the input text\n\n"
         << "  -d|--decrypt     Decrypts the input text\n\n";

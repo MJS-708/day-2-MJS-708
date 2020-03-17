@@ -15,7 +15,7 @@ CaesarCipher::CaesarCipher(const std::string inputKey) //Takes key as string
   }
 
 
-std::string CaesarCipher::applyCaesarCipher (const std::string& inputText, const Cipher mode ) const
+std::string CaesarCipher::applyCipher (const std::string& inputText, const Cipher mode ) const
 {
   int newIndex {};
   std::cout << "updated key is " << key_ << std::endl;

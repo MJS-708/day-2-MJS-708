@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "CipherMode.hpp"
+#include "CipherType.hpp"
 
 // Struct type to take all arguments of processCommandLine
 struct ProgramSettings {
@@ -16,6 +17,7 @@ struct ProgramSettings {
   Cipher mode;
   std::string key;
   bool closeProgram;
+  CipherType cipherType;  ///< Flag to indicate which cipher to use (e.g. Caesar, Playfair, etc.)
 };
 
 //function to parse command line arguments

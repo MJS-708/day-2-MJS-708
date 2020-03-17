@@ -6,13 +6,22 @@ message("New subdirectory added to the build")
 
 # - Declare the build of the static MPAGSCipher library
 add_library(MPAGSCipher STATIC
-    CaesarCipher.hpp
-    CaesarCipher.cpp
-    ProcessCommandLine.hpp
-    ProcessCommandLine.cpp
-    TransformChar.hpp
-    TransformChar.cpp
-    )
+	CaesarCipher.hpp
+	CaesarCipher.cpp
+	PlayfairCipher.hpp
+	PlayfairCipher.cpp
+	VignereCipher.hpp
+	VignereCipher.cpp
+	ProcessCommandLine.hpp
+	ProcessCommandLine.cpp
+	TransformChar.hpp
+	TransformChar.cpp
+	CipherMode.hpp
+	CipherType.hpp
+	CipherBase.hpp
+	CipherFactory.hpp
+	CipherFactory.cpp
+	)
 
 target_include_directories(MPAGSCipher
     PUBLIC ${CMAKE_CURRENT_LIST_DIR} # CMake convenience variable

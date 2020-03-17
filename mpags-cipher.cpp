@@ -12,9 +12,9 @@
 // Our project headers
 #include "TransformChar.hpp"
 #include "ProcessCommandLine.hpp"
-//#include "runCaesarCipher.hpp"
-#include "CaesarCipher.hpp"
 #include "CipherMode.hpp"
+#include "CipherType.hpp"
+#include "CipherFactory.hpp"
 
 // Main function of the mpags-cipher program
 int main(int argc, char* argv[])
@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
   const std::vector<std::string> cmdLineArgs {argv, argv+argc};
 
   // Options that might be set by the command-line arguments
-  ProgramSettings arguments {false, false, "", "", Cipher::encrypt, "", false};
+  ProgramSettings arguments {false, false, "", "", Cipher::encrypt, "", false, CipherType::Caesar};
   /*
   Creates vector of arguments based on struct type in processCommandLine.hpp file:
     bool helpRequested {false};
@@ -69,9 +69,9 @@ int main(int argc, char* argv[])
     }
   }
 
-  CaesarCipher cipherObject {arguments.key}; //initialising class with key
+  auto cipherObject = cipherFactory(arguments.cipherType, arguments.key);
+  transformed_text = cipherObject -> applyCipher(transformed_text, arguments.mode);
 
-  transformed_text = cipherObject.applyCaesarCipher(transformed_text, arguments.mode); //transformed text is now the deciphered text returned by the caesar cipher
 
   //std::cout << transformed_text << std::endl;
 
